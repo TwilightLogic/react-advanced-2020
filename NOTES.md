@@ -110,7 +110,7 @@ const [text, setText] = useState('random title');
 ```
 
 > Here is name convention:
-> if the value is `text`, and we will name the prefix `set` here
+> if the value is `text`, and we will set the `setText` as the function name here
 
 Here is the finished example
 
