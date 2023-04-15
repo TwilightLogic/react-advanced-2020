@@ -2,6 +2,13 @@
 
 ### Hooks
 
+#### General Rules of Hooks
+
+- We must use `use` in the beginning of the components
+- Components must be uppercase
+- Must be in the function/component body
+- Cannot call conditionally
+
 #### useState
 
 ##### Intro
