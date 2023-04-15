@@ -155,12 +155,14 @@ export default UseStateBasics;
 This is an example to use array in `useState`
 
 ```js
+// 3-useState-array.js
 import React from 'react';
 import { data } from '../../../data';
 
 const UseStateArray = () => {
   const [people, setPeople] = React.useState(data);
   return (
+    // <></>: <React.Fragment></React.Fragment>
     <>
       {people.map(person => {
         const { id, name } = person;
@@ -175,4 +177,113 @@ const UseStateArray = () => {
 };
 
 export default UseStateArray;
+```
+
+#### useState - Object Examples
+
+Why the content are wiped out when we clicked the button?
+
+```js
+// 4-useState-object.js
+import React, { useState } from 'react';
+
+const UseStateObject = () => {
+  const [person, setPerson] = React.useState({
+    name: 'Peter',
+    age: 24,
+    message: 'random message',
+  });
+
+  const changeMessage = () => {
+    setPerson('hello world');
+  };
+
+  return (
+    <>
+      <h3>{person.name}</h3>
+      <h3>{person.age}</h3>
+      <h3>{person.message}</h3>
+      <button type="button" className="btn" onClick={changeMessage}>
+        change message
+      </button>
+    </>
+  );
+};
+
+export default UseStateObject;
+```
+
+Because the `hello world` is a string.
+But the parameter of `setPerson` is an object.
+So it will wipe out all of the contents.
+
+Here is the solution:
+Just set the parameter of `setPerson` as an object.
+
+```js
+// 4-useState-object.js
+import React, { useState } from 'react';
+
+const UseStateObject = () => {
+  const [person, setPerson] = React.useState({
+    name: 'Peter',
+    age: 24,
+    message: 'random message',
+  });
+
+  const changeMessage = () => {
+    setPerson({ message: 'hello world' });
+  };
+
+  return (
+    <>
+      <h3>{person.name}</h3>
+      <h3>{person.age}</h3>
+      <h3>{person.message}</h3>
+      <button type="button" className="btn" onClick={changeMessage}>
+        change message
+      </button>
+    </>
+  );
+};
+
+export default UseStateObject;
+```
+
+❌ But another bad scenario occurs:
+We can see the content in the browser only remains the `message`,
+the `name` and `age` properties are gone.
+
+Use **separate operator** to fix it:
+
+```js
+import React, { useState } from 'react';
+
+const UseStateObject = () => {
+  const [person, setPerson] = React.useState({
+    name: 'Peter',
+    age: 24,
+    message: 'random message',
+  });
+
+  const changeMessage = () => {
+    // Use **separate operator** here
+    // which renders the item of person,
+    // and we overwrite the `message` item.
+    setPerson({ ...person, message: 'hello world' });
+  };
+
+  return (
+    <>
+      <h3>{person.name}</h3>
+      <h3>{person.age}</h3>
+      <h3>{person.message}</h3>
+      <button type="button" className="btn" onClick={changeMessage}>
+        change message
+      </button>
+    </>
+  );
+};
+
+export default UseStateObject;
 ```
