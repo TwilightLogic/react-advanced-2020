@@ -9,9 +9,9 @@
 - Must be in the function/component body
 - Cannot call conditionally
 
-#### useState
+### useState
 
-##### Intro
+#### Intro
 
 > We do you think while we are pressing the button?
 >
@@ -150,7 +150,7 @@ const UseStateBasics = () => {
 export default UseStateBasics;
 ```
 
-##### useState - Array Examples
+#### useState - Array Examples
 
 This is an example to use array in `useState`
 
