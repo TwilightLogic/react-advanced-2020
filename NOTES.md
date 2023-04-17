@@ -413,3 +413,55 @@ Because **setting state only changes it for the next render.** (💥 Super **IMP
 > When we click the button like 10 times, it actually is rendering (but not rendered, right?).
 
 A state variable’s value never changes within a render, even if its event handler’s code is asynchronous.
+
+#### Queueing a Series of State Updates
+
+Consider: Why adding a parameter to `setValue` will make multiple-clicks event works?
+
+```js
+import React, { useState } from 'react';
+
+const UseStateCounter = () => {
+  const [value, setValue] = useState(0);
+
+  const reset = () => {
+    setValue(0);
+  };
+
+  const complexIncrease = () => {
+    setTimeout(() => {
+      setValue(preValue => {
+        return preValue + 1;
+      });
+    }, 2000);
+  };
+
+  return (
+    <>
+      <section style={{ margin: '4rem 0' }}>
+        <h2>regular counter</h2>
+        <h1>{value}</h1>
+        <button className="btn" onClick={() => setValue(value - 1)}>
+          decrease
+        </button>
+        <button className="btn" onClick={reset}>
+          reset
+        </button>
+        <button className="btn" onClick={() => setValue(value + 1)}>
+          increase
+        </button>
+      </section>
+
+      <section style={{ margin: '4rem 0' }}>
+        <h2>more complex counter</h2>
+        <h1>{value}</h1>
+        <button className="btn" onClick={complexIncrease}>
+          increase later
+        </button>
+      </section>
+    </>
+  );
+};
+
+export default UseStateCounter;
+```
