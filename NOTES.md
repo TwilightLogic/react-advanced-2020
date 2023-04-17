@@ -364,3 +364,52 @@ const UseStateCounter = () => {
 
 export default UseStateCounter;
 ```
+
+#### Functional Update Form
+
+details in: [State as Snapshot](https://react.dev/learn/state-as-a-snapshot)
+
+So here is a `complexIncrease` function that increase the value by 1.
+What do you think if we **click the button for 3 times** ?
+
+```js
+import React, { useState } from 'react';
+
+const UseStateCounter = () => {
+  const [value, setValue] = useState(0);
+
+  const reset = () => {
+    setValue(0);
+  };
+
+  const complexIncrease = () => {
+    setTimeout(() => {
+      setValue(value + 1);
+    }, 2000);
+  };
+
+  return (
+    <>
+      <section style={{ margin: '4rem 0' }}>
+        <h2>more complex counter</h2>
+        <h1>{value}</h1>
+        <button className="btn" onClick={complexIncrease}>
+          increase later
+        </button>
+      </section>
+    </>
+  );
+};
+
+export default UseStateCounter;
+```
+
+It actually increase **one** time. Why?
+
+Because **setting state only changes it for the next render.** (💥 Super **IMPORTANT** to know)
+
+> I know we've already clicked the `increase later` button so many times.
+> But it only changes the state while finished the rendering.
+> When we click the button like 10 times, it actually is rendering (but not rendered, right?).
+
+A state variable’s value never changes within a render, even if its event handler’s code is asynchronous.
