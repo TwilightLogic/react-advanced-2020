@@ -465,3 +465,13 @@ const UseStateCounter = () => {
 
 export default UseStateCounter;
 ```
+
+**Prerequisites to Know:**
+
+- Typically, this code `setValue(value + 1)` is just replacing the value as `value + 1`.
+- BUT, this code `setValue(preValue => {return preValue + 1})` means really something: **it is a way to tell React to “do something with the state value” instead of just replacing it. (Updater function: we can update the same state variable multiple times before the next render)**
+
+**Here is the steps:**
+
+1. `setValue(preValue => {return preValue + 1})`: `return preValue + 1` is a function. React adds it to a queue.
+2. If we click the button so many times, it will add the function `return preValue + 1` to a queue one by one (Remember `setTimeout` is an asynchronous function).
