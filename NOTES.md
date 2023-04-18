@@ -475,3 +475,5 @@ export default UseStateCounter;
 
 1. `setValue(preValue => {return preValue + 1})`: `return preValue + 1` is a function. React adds it to a queue.
 2. If we click the button so many times, it will add the function `return preValue + 1` to a queue one by one (Remember `setTimeout` is an asynchronous function).
+
+### useEffect
