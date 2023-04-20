@@ -486,7 +486,7 @@ Why do we use `useEffect`?
 
 - `useEffect` is used when we want to set up side-effect that works out side of the component. (It's like connecting to an external system).
 
-Here is the example that we are going to set the page title <code>document.title = `New Messages(${value})`</code> (It is the code that out of React, right?)
+Here is the example that we are going to set the page title <code>document.title = \`New Messages(${value})\`</code> (It is the code that out of React, right?)
 
 ```js
 import React, { useState, useEffect } from 'react';
