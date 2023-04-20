@@ -484,11 +484,9 @@ more details: [useEffect#usage](https://react.dev/reference/react/useEffect#usag
 
 Why do we use `useEffect`?
 
-- `useEffect` is used when we want to set up side-effect that works out side of the component. (It's like connecting to an external system)
+- `useEffect` is used when we want to set up side-effect that works out side of the component. (It's like connecting to an external system).
 
-The first parameter which is function that **returns** `cleanup code` in `useEffect` is **cleanup function**.
-
-- It should return a cleanup function with `cleanup code` that disconnects from that system.
+Here is the example that we are going to set the page title <code>document.title = `New Messages(${value})`</code> (It is the code that out of React, right?)
 
 ```js
 import React, { useState, useEffect } from 'react';
@@ -521,7 +519,7 @@ export default UseEffectBasics;
 
 #### useEffect - Conditional
 
-We cannot nest the `useEffect` in conditional state
+We cannot nest the `useEffect` in conditional state. `useEffect` has to be in the top level of the code.
 
 ```js
 import React, { useState, useEffect } from 'react';
@@ -551,7 +549,7 @@ export default UseEffectBasics;
 
 #### useEffect - Dependency List
 
-If you want to run the `useEffect` on the initial render (for only once, and it won't call `useEffect` second time), just need to add an empty array `[]` in the second parameter of `useEffect`. (🔴 React don't recommend to use empty `[]` dependencies list)
+If you want to run the `useEffect` on the initial render (for only once, and it won't call `useEffect` second time), just need to add an empty array `[]` in the second parameter of `useEffect`. (🔴 React don't recommend to use empty `[]` in dependencies list)
 
 ```js
 import React, { useState, useEffect } from 'react';
@@ -586,9 +584,9 @@ const UseEffectBasics = () => {
 export default UseEffectBasics;
 ```
 
-A `list of dependencies` including every value from your component used inside of those functions.
-
 ##### So, why do we need `reactive dependencies`?
+
+A `list of dependencies` including every value from your component used inside of those functions.
 
 Sometimes, we need to fetch data while using `useEffect`. But the data(reactive value) are out of the `useEffect` function. We can't "choose" the dependencies of our Effect. Every `reactive value` used by our Effect’s code must be declared as a dependency. Our Effect’s dependency list is determined by the surrounding code:
 
@@ -607,3 +605,5 @@ function ChatRoom({ roomId }) {
 ```
 
 If either `serverUrl` or `roomId` change, our Effect will reconnect to the chat using the new values.
+
+#### useEffect - Cleanup Function
