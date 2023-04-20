@@ -584,7 +584,7 @@ const UseEffectBasics = () => {
 export default UseEffectBasics;
 ```
 
-##### So, why do we need `reactive dependencies`?
+##### So, why do we need `reactive dependencies`? （example from react.dev）
 
 A `list of dependencies` including every value from your component used inside of those functions.
 
