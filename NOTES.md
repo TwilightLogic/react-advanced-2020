@@ -549,7 +549,7 @@ export default UseEffectBasics;
 
 #### useEffect - Dependency List
 
-If you want to run the `useEffect` on the initial render (for only once, and it won't call `useEffect` second time), just need to add an empty array `[]` in the second parameter of `useEffect`. (🔴 React don't recommend to use empty `[]` in dependencies list)
+If you want to run the `useEffect` on the initial render (for only once, and it won't call `useEffect` second time), just need to add an empty array `[]` in the second parameter of `useEffect`.
 
 ```js
 import React, { useState, useEffect } from 'react';
