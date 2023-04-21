@@ -20,7 +20,6 @@ const UseEffectFetchData = () => {
     // Finally, we will get an infinite loop
     // SOLUTION: add an empty array as dependencies list (Only triggers `useEffect` once when rendering at first time)
     setUsers(users);
-    console.log(users);
   };
 
   // `useEffect` cannot be an async function and returns any `Promises`
@@ -31,6 +30,20 @@ const UseEffectFetchData = () => {
   return (
     <>
       <h3>github users</h3>
+      <ul className="users">
+        {users.map(user => {
+          const { id, login, avatar_url, html_url } = user;
+          return (
+            <li key={id}>
+              <img src={avatar_url} alt="login" />
+              <div>
+                <h4>{login}</h4>
+                <a href={html_url}>profile</a>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 };
