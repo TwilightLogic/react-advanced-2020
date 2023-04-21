@@ -549,7 +549,7 @@ export default UseEffectBasics;
 
 #### useEffect - Dependency List
 
-If you want to run the `useEffect` on the initial render (for only once, and it won't call `useEffect` second time), just need to add an empty array `[]` in the second parameter of `useEffect`.
+If you want to run the `useEffect` on the initial render (for only once, and it won't call `useEffect` while the `value` changed which triggered the re-render), just need to add an empty array `[]` in the second parameter of `useEffect`.
 
 ```js
 import React, { useState, useEffect } from 'react';
@@ -609,6 +609,8 @@ If either `serverUrl` or `roomId` change, our Effect will reconnect to the chat 
 #### useEffect - Cleanup Function
 
 The cleanup function should **stop or undo** whatever the setup function was doing.
+
+Just like the name implies, the useEffect cleanup is a function in the useEffect Hook that allows us to tidy up our code before our component unmounts. When our code runs and reruns for every render, useEffect also cleans up after itself using the cleanup function.
 
 ```js
 import React, { useState, useEffect } from 'react';
@@ -673,7 +675,7 @@ const UseEffectFetchData = () => {
     // It triggers re-render after updating `users`.
     // After re-render, it will call `getUsers()` again in `useEffect()`
     // Finally, we will get an infinite loop
-    // SOLUTION: add an empty array as dependencies list (Only triggers `useEffect` once when rendering at first time)
+    // 💡 SOLUTION: add an empty array as dependencies list (Only triggers `useEffect` once when rendering at first time)
     setUsers(users);
     console.log(users);
   };
