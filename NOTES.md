@@ -695,7 +695,7 @@ const UseEffectFetchData = () => {
 export default UseEffectFetchData;
 ```
 
-### Multiple Returns
+### Conditional Rendering
 
 #### Multiple Returns - Basics
 
@@ -768,3 +768,5 @@ const MultipleReturns = () => {
 
 export default MultipleReturns;
 ```
+
+#### Short Circuit
