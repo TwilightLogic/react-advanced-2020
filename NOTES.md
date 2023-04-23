@@ -842,3 +842,12 @@ const Item = () => {
 
 export default ShowHide;
 ```
+
+### Forms
+
+> ##### Why do we use `<label>`?
+>
+> Typically, you will place every `<input>` inside a `<label>` tag.
+> This tells the browser that this label is associated with that input.
+> When the user clicks the label, the browser will automatically focus the input.
+> It’s also essential for accessibility: a screen reader will announce the label caption when the user focuses the associated input.
