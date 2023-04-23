@@ -8,11 +8,28 @@ import React, { useState } from 'react';
 const ControlledInputs = () => {
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
+  const [people, setPeople] = useState([]);
 
   const handleSubmit = e => {
     // `e.preventDefault()` We can see the 'hello world' that without refreshing the page.
     e.preventDefault();
-    console.log(firstName, email);
+
+    // If the values are not empty, we will add a person to the `people` state
+    if (firstName && email) {
+      // const person = { firstName: firstName, email: email };
+      // We can use ES6 features (shorthands way)
+      // CHEAT: Setting date as id
+      const person = { id: new Date().getTime().toString(), firstName, email };
+      // WOW I like this coding style ⬇️
+      setPeople(people => {
+        return [...people, person];
+      });
+      // We will reset the inputs after setting people
+      setFirstName('');
+      setEmail('');
+    } else {
+      console.log('empty values');
+    }
   };
   return (
     <>
@@ -42,6 +59,15 @@ const ControlledInputs = () => {
             add person
           </button>
         </form>
+        {people.map(person => {
+          const { id, firstName, email } = person;
+          return (
+            <div className="item" key={id}>
+              <h4>{firstName}</h4>
+              <p>{email}</p>
+            </div>
+          );
+        })}
       </article>
     </>
   );
