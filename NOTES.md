@@ -1024,10 +1024,12 @@ export default ControlledInputs;
 #### Multiple - Inputs
 
 We are refactoring the code.
-As above of the code, there 4 `state` definition in our component.
+
+As above of the code, there 4 `state` definitions in our component.
+
 We want to keep code dry and cleaned.
 
-The notes are nested in code block.
+> The notes are nested in code block.
 
 ```js
 import React, { useState } from 'react';
