@@ -1124,3 +1124,9 @@ const ControlledInputs = () => {
 
 export default ControlledInputs;
 ```
+
+### useRef
+
+**When to use `useRef`?**
+
+- When we want a component to “remember” some information, but we don’t want that information to trigger new renders, we can use a ref.
