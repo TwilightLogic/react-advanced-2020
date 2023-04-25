@@ -3,6 +3,8 @@ import Modal from './Modal';
 import { data } from '../../../data';
 
 // reducer function
+// which returns a **new state** according to the different action type.
+// action type which likes (update a new value, merge some values, and delete elements)
 const reducer = (state, action) => {};
 
 // defaultState
@@ -21,6 +23,10 @@ const Index = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (name) {
+      dispatch({ type: 'TESTING' });
+    }
   };
 
   return (
