@@ -1171,3 +1171,10 @@ const UseRefBasics = () => {
 
 export default UseRefBasics;
 ```
+
+### useReducer
+
+Why do we use **`useReducer`**?
+
+- Sometimes there are many states to be updated spread across in many event handlers in our components that will get the code very overwhelming.
+- For solving these kind of cases, we will consolidate all the **state update logic outside our component in a single function**, called a _reducer_.
