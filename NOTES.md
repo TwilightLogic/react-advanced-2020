@@ -1174,6 +1174,8 @@ export default UseRefBasics;
 
 ### useReducer
 
+#### useReducer - Intro
+
 Why do we use **`useReducer`**?
 
 - Sometimes there are many states to be updated spread across in many event handlers in our components that will get the code very overwhelming.
@@ -1232,3 +1234,35 @@ const Index = () => {
 
 export default Index;
 ```
+
+#### useReducer - Refactor
+
+Examples from [React.dev](https://react.dev/learn/extracting-state-logic-into-a-reducer)
+
+Reducers are a different way to handle state. We can migrate from `useState` to `useReducer` in three steps:
+
+**1. Move from setting state to dispatching actions.**
+
+> **Note**
+> Dispatching Actions
+>
+> - Instead of telling React “what to do” by setting state, we specify "what the user just did" by dispatching "actions" from your event handlers.
+> - The object in `dispatch` is called an "action"
+>
+> ```js
+> function handleDeleteTask(taskId) {
+>   dispatch({
+>     type: 'deleted',
+>     id: taskId,
+>   });
+> }
+> ```
+
+**2. Write a reducer function.**
+
+> **Note**
+>
+> - A reducer function is where we will put our state logic. It takes two arguments, the **current state** and the **action object**, and it returns next state.
+> - React will set the state to what you return from the reducer.
+
+**3. Use the reducer from your component.**
