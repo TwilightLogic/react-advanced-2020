@@ -2,22 +2,24 @@ import React, { useState, useReducer } from 'react';
 import Modal from './Modal';
 import { data } from '../../../data';
 
-// reducer function
-// which returns a **new state** according to the different action type.
-// action type which likes (update a new value, merge some values, and delete elements)
-const reducer = (state, action) => {};
-
-// defaultState
 const defaultState = {
   people: [],
   isModalOpen: false,
   modalContent: '',
 };
 
-// Component
+const reducer = (state, action) => {
+  if (action.type === 'TESTING') {
+    return {
+      ...state,
+      people: data,
+      isModalOpen: true,
+      modalContent: 'Item added',
+    };
+  }
+};
+
 const Index = () => {
-  // param 1: reducer function(RETURNS: a dispatch function)
-  // param 2: initial state(RETURNS: A stateful value)
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [name, setName] = useState('');
 
@@ -31,7 +33,6 @@ const Index = () => {
 
   return (
     <>
-      {/* &&: For showing the component */}
       {state.isModalOpen && <Modal modalContent={state.modalContent} />}
       <form className="form" onSubmit={handleSubmit}>
         <div>
