@@ -1252,7 +1252,8 @@ Reducers are a different way to handle state. We can migrate from `useState` to 
 > ```js
 > function handleDeleteTask(taskId) {
 >   dispatch({
->     type: 'deleted',
+>     // "action" object:
+>     type: 'deleted', // Choose a name that says what happened!
 >     id: taskId,
 >   });
 > }
@@ -1265,4 +1266,87 @@ Reducers are a different way to handle state. We can migrate from `useState` to 
 > - A reducer function is where we will put our state logic. It takes two arguments, the **current state** and the **action object**, and it returns next state.
 > - React will set the state to what you return from the reducer.
 
+```js
+function yourReducer(state, action) {
+  // return next state for React to set
+}
+```
+
 **3. Use the reducer from your component.**
+
+```js
+import React, { useState, useReducer } from 'react';
+import Modal from './Modal';
+import { data } from '../../../data';
+
+const defaultState = {
+  people: [],
+  isModalOpen: false,
+  modalContent: '',
+};
+
+const reducer = (state, action) => {
+  if (action.type === 'ADD_ITEM') {
+    const newPeople = [...state.people, action.payload];
+    return {
+      ...state,
+      people: newPeople,
+      isModalOpen: true,
+      modalContent: 'Item added',
+    };
+  }
+  // We still wanna return our state here
+  if (action.type === 'NO_VALUE') {
+    return {
+      ...state,
+      isModalOpen: true,
+      modalContent: 'Please enter value',
+    };
+  }
+  throw new Error('no matching action type');
+};
+
+const Index = () => {
+  const [state, dispatch] = useReducer(reducer, defaultState);
+  const [name, setName] = useState('');
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if (name) {
+      // We have `setName()` to assign the e.target.value to name
+      const newItem = { id: new Date().getTime().toString(), name };
+      // Name convention
+      dispatch({ type: 'ADD_ITEM', payload: newItem });
+      setName('');
+    } else {
+      dispatch({ type: 'NO_VALUE' });
+    }
+  };
+
+  return (
+    <>
+      {state.isModalOpen && <Modal modalContent={state.modalContent} />}
+      <form className="form" onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+          />
+        </div>
+        <button type="submit">add </button>
+      </form>
+      {state.people.map(person => {
+        return (
+          <div key={person.id}>
+            <h4>{person.name}</h4>
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+export default Index;
+```
