@@ -1293,12 +1293,14 @@ import React, { useState, useReducer } from 'react';
 import Modal from './Modal';
 import { data } from '../../../data';
 
+// 1. Determine the initial state:
 const defaultState = {
   people: [],
   isModalOpen: false,
   modalContent: '',
 };
 
+// 2. Create the reducer function
 const reducer = (state, action) => {
   if (action.type === 'ADD_ITEM') {
     const newPeople = [...state.people, action.payload];
@@ -1327,6 +1329,7 @@ const Index = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
+    // 3. Dispatch actions to update state
     if (name) {
       // We have `setName()` to assign the e.target.value to name
       const newItem = { id: new Date().getTime().toString(), name };
@@ -1364,6 +1367,13 @@ const Index = () => {
 
 export default Index;
 ```
+
+> **✨ Recap**
+>
+> 1. Determine the initial state: Before using useReducer, we need to determine the initial state of our component. This should be an object that represents the starting values of all the state variables we need to manage.
+> 2. Create the reducer function: The reducer function takes in the current state and an action object and returns the new state. It's important to keep the reducer function pure, meaning it should not modify the original state object, but instead return a new object that represents the updated state.
+> 3. Dispatch actions to update state: Once we have the reducer function and initial state, we can use the useReducer hook to create a state object and a dispatch function. We can use the dispatch function to send action objects to the reducer function, which will update the state accordingly.
+> 4. Use the state object in our component: We can then use the state object to render our component based on the current state. We can also pass the dispatch function down to child components as needed.
 
 ### Prop Drilling
 
