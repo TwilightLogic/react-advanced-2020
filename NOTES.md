@@ -1479,3 +1479,5 @@ const SinglePerson = ({ id, name }) => {
 
 export default ContextAPI;
 ```
+
+### Custom Hooks - useFetch
