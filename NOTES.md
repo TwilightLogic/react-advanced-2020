@@ -1181,6 +1181,15 @@ Why do we use **`useReducer`**?
 - Sometimes there are many states to be updated spread across in many event handlers in our components that will get the code very overwhelming.
 - For solving these kind of cases, we will consolidate all the **state update logic outside our component in a single function**, called a _reducer_.
 
+When do we use **`useReducer`**?
+
+Here are some scenarios where we might use useReducer:
+
+1. Managing state with complex or deeply nested data structures: useReducer can be useful when we need to update state based on multiple sub-values or when we need to perform more complex operations on the state data.
+2. Handling state transitions that depend on previous state: useReducer allows us to handle state transitions that depend on the current state in a more consistent and predictable way.
+3. Managing multiple actions with a single reducer: If we have multiple actions that can modify the same state, we can use useReducer to manage all of these actions with a single reducer function, which can simplify our code and make it easier to reason about.
+4. Improving performance by avoiding unnecessary re-renders: In some cases, using useReducer instead of useState can improve performance by avoiding unnecessary re-renders of components that are subscribed to the state updates.
+
 We are using `useState` here for coming up with the `useReducer`
 
 ```js
@@ -1259,6 +1268,9 @@ Reducers are a different way to handle state. We can migrate from `useState` to 
 > }
 > ```
 
+> **Note**
+> This `dispatch()` function will tell the `reducer()` what is the type that we are going to operate with our state. And `dispatch()` will forward 2 params to `reducer()` which one is `type` and another one is `payload`(data)
+
 **2. Write a reducer function.**
 
 > **Note**
@@ -1273,6 +1285,8 @@ function yourReducer(state, action) {
 ```
 
 **3. Use the reducer from your component.**
+
+We added items as a list here
 
 ```js
 import React, { useState, useReducer } from 'react';
