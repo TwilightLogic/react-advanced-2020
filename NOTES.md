@@ -1547,12 +1547,6 @@ export const useFetch = url => {
 
 Think about a scenario:
 
-This is a `product.js` which fetched the data from API.
-BUT, what if the API missing some properties here? (like image source, price or sth).
-We will get a big fat error from our project.
-
-How do we fix it?
-
 ```js
 import React from 'react';
 
@@ -1564,6 +1558,39 @@ const Product = ({ image, name, price }) => {
       <p>${price}</p>
     </article>
   );
+};
+
+export default Product;
+```
+
+This is a `product.js` which fetched the data from API.
+BUT, what if the API missing some properties here? (like image source, price or sth).
+We will get a big fat error from our project.
+
+How do we fix it?
+
+- Use `PropTypes` provided by React (deprecated from React-v15)
+
+```js
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const Product = ({ image, name, price }) => {
+  console.log(image, name, price);
+  return (
+    <article className="product">
+      <h4>single product</h4>
+      {/* <img src={image.url} alt={name} />
+      <h4>{name}</h4>
+      <p>${price}</p> */}
+    </article>
+  );
+};
+
+Product.propTypes = {
+  image: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
 export default Product;
