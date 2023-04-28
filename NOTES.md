@@ -1542,3 +1542,29 @@ export const useFetch = url => {
   return { loading, products };
 };
 ```
+
+### PropTypes
+
+Think about a scenario:
+
+This is a `product.js` which fetched the data from API.
+BUT, what if the API missing some properties here? (like image source, price or sth).
+We will get a big fat error from our project.
+
+How do we fix it?
+
+```js
+import React from 'react';
+
+const Product = ({ image, name, price }) => {
+  return (
+    <article className="product">
+      <img src={image.url} alt={name} />
+      <h4>{name}</h4>
+      <p>${price}</p>
+    </article>
+  );
+};
+
+export default Product;
+```
