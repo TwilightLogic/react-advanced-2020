@@ -1023,7 +1023,7 @@ export default ControlledInputs;
 
 #### Multiple - Inputs
 
-We are refactoring the code.
+We refractor the code.
 
 As above of the code, there 4 `state` definitions in our component.
 
@@ -1244,7 +1244,7 @@ const Index = () => {
 export default Index;
 ```
 
-#### useReducer - Refactor
+#### useReducer - Refractor
 
 Examples from [React.dev](https://react.dev/learn/extracting-state-logic-into-a-reducer)
 
