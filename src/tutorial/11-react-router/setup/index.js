@@ -12,15 +12,23 @@ import Navbar from './Navbar';
 const ReactRouterSetup = () => {
   return (
     <Router>
-      <Route path="/">
-        <Home />
-      </Route>
-      <Route path="/about">
-        <About />
-      </Route>
-      <Route path="/people">
-        <People />
-      </Route>
+      <Navbar />
+      {/* `Switch` render only the first matching <Route> component.  */}
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/people">
+          <People />
+        </Route>
+        {/* STAR*: means it will always match */}
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
     </Router>
   );
 };

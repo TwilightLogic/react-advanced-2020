@@ -1678,3 +1678,112 @@ It generated some issues.
 The home page will always be rendered because of its path "/".
 
 We should use `exact` key word nested in `<Route exact path="/">` to avoid the multiple-rendering.
+
+We add `Switch` component here
+
+- `Switch` components **render only the first matching <Route> component**.
+
+```js
+import React from 'react';
+// react router
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// pages
+import Home from './Home';
+import About from './About';
+import People from './People';
+import Error from './Error';
+import Person from './Person';
+// navbar
+import Navbar from './Navbar';
+const ReactRouterSetup = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/people">
+          <People />
+        </Route>
+        {/* STAR*: means it will always match */}
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
+
+export default ReactRouterSetup;
+```
+
+We can also make a navbar for linking them with different paths.
+
+1. We add `<Navbar />` component in our `index.js`
+
+```js
+import React from 'react';
+// react router
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// pages
+import Home from './Home';
+import About from './About';
+import People from './People';
+import Error from './Error';
+import Person from './Person';
+// navbar
+import Navbar from './Navbar';
+const ReactRouterSetup = () => {
+  return (
+    <Router>
+      <Navbar />
+      {/* `Switch` render only the first matching <Route> component.  */}
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/people">
+          <People />
+        </Route>
+        {/* STAR*: means it will always match */}
+        <Route path="*">
+          <Error />
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
+
+export default ReactRouterSetup;
+```
+
+2. set the `<Link>` components in `<Navbar />`
+
+```js import React from 'react';
+import { Link } from 'react-router-dom';
+const Navbar = () => {
+  return (
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/people">People</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export default Navbar;
+```
