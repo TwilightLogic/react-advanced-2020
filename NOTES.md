@@ -1437,6 +1437,10 @@ export default PropDrilling;
 
 ### useContext
 
+useContext is a hook that allows components to consume data from a context without having to pass it down through intermediate components in the component tree.
+
+In other words, useContext provides a way for a component to access data or functionality that has been defined in a higher-level component, without having to pass it down as a prop through every intermediate component.
+
 Here is the example that we refractor the code above
 
 ```js
@@ -1448,6 +1452,7 @@ import { data } from '../../../data';
 const PersonContext = React.createContext();
 // two components - Provider, Consumer
 
+// `ContextAPI` is our parent component
 const ContextAPI = () => {
   const [people, setPeople] = useState(data);
   const removePerson = id => {
@@ -1456,14 +1461,16 @@ const ContextAPI = () => {
     });
   };
   return (
+    // `PersonContext.Provider` component is for providing the context data to its children.
     <PersonContext.Provider value={{ removePerson, people }}>
       <h3>Context API / useContext</h3>
-      <List people={people} />
+      <List />
     </PersonContext.Provider>
   );
 };
 
 const List = () => {
+  // It is for a child component to retrieve the data ({removePerson, people})
   const mainData = useContext(PersonContext);
   console.log(mainData);
 
@@ -1489,6 +1496,8 @@ const SinglePerson = ({ id, name }) => {
 
 export default ContextAPI;
 ```
+
+Using useContext can make your code more concise and easier to read, as it eliminates the need to pass data through multiple levels of components. However, it should be used judiciously, as using too many contexts can make your code harder to understand and maintain.
 
 ### Custom Hooks - useFetch
 
