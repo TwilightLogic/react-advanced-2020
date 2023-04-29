@@ -1638,3 +1638,43 @@ export default Product;
 #### Intro
 
 React Router is a popular routing library for React applications that allows you to handle URLs in your application and render the appropriate UI components based on the URL. It makes developing Single Page Applications (SPAs) easier because it allows you to dynamically render components without refreshing the entire page while keeping the URL in sync.
+
+#### Basics Setup
+
+```js
+import React from 'react';
+// react router
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// pages
+import Home from './Home';
+import About from './About';
+import People from './People';
+import Error from './Error';
+import Person from './Person';
+// navbar
+import Navbar from './Navbar';
+const ReactRouterSetup = () => {
+  return (
+    <Router>
+      <Route path="/">
+        <Home />
+      </Route>
+      <Route path="/about">
+        <About />
+      </Route>
+      <Route path="/people">
+        <People />
+      </Route>
+    </Router>
+  );
+};
+
+export default ReactRouterSetup;
+```
+
+It changed the website after we set the different path in url.
+
+It generated some issues.
+The home page will always be rendered because of its path "/".
+
+We should use `exact` key word nested in `<Route exact path="/">` to avoid the multiple-rendering.
