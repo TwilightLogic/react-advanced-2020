@@ -1634,3 +1634,7 @@ export default Product;
 ```
 
 ### React Router
+
+#### Intro
+
+React Router is a popular routing library for React applications that allows you to handle URLs in your application and render the appropriate UI components based on the URL. It makes developing Single Page Applications (SPAs) easier because it allows you to dynamically render components without refreshing the entire page while keeping the URL in sync.
