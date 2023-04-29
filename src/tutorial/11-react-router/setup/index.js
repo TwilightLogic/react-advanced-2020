@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 // react router
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // pages
@@ -24,6 +24,7 @@ const ReactRouterSetup = () => {
         <Route path="/people">
           <People />
         </Route>
+        <Route path="/person/:id" children={<Person />}></Route>
         {/* STAR*: means it will always match */}
         <Route path="*">
           <Error />

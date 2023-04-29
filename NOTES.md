@@ -1787,3 +1787,49 @@ const Navbar = () => {
 
 export default Navbar;
 ```
+
+#### Url Params and Placeholder
+
+Now we can add each corresponding links to the people that rendered in people page by using `<Link to>` component.
+
+> ##### We explain more details here:
+>
+> **BEHIND THE SCENES:**
+>
+> - We add `<Route path="/person/:id" children={<Person />}></Route>` in `index.js`,
+> - which means that display the children page while we accessing the path `/person/:id`.
+> - `:id` refers to a **dynamic parameter**. Don't get it wrong.
+>
+> **IN THE VIEWS:**
+>
+> - We made the `id` as a dynamic value in a link `/person/${person.id}` of `People.js` which
+>   takes the `person.id` forwarding from `people.map()` method.
+> - As we click one of the person of `People` component, it directs to the `Person` component
+>   (person page).
+
+Now if we click the person that rendered in people page,
+it should direct the corresponding url and display the name.
+
+```js
+import React, { useState, useEffect } from 'react';
+import { data } from '../../../data';
+import { Link, useParams } from 'react-router-dom';
+
+const Person = () => {
+  const [name, setName] = useState('default name');
+  const { id } = useParams();
+
+  useEffect(() => {
+    const newPerson = data.find(person => person.id === parseInt(id));
+    setName(newPerson.name);
+  }, []);
+
+  return (
+    <div>
+      <h1>{name}</h1>
+    </div>
+  );
+};
+
+export default Person;
+```
