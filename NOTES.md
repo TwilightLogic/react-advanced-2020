@@ -1833,3 +1833,11 @@ const Person = () => {
 
 export default Person;
 ```
+
+### Performance Optimization
+
+#### useMemo
+
+useMemo is a hook provided by React that allows us to optimize the performance of our React application by memoizing the value of a function or computation. Memoization is the process of storing the result of a function call so that future calls to that function with the same input will return the cached result rather than computing the result again.
+
+When we use useMemo, we pass in a function and a dependency array. React will call the function and memoize the result. The next time the component renders, React will check the dependency array to see if any of the values have changed. If none of the values have changed, React will return the memoized value instead of recomputing the result.
