@@ -12,9 +12,10 @@ const Index = () => {
   const [count, setCount] = useState(0);
   const [cart, setCart] = useState(0);
 
-  const addToCart = () => {
+  const addToCart = useCallback(() => {
+    console.log(cart);
     setCart(cart + 1);
-  };
+  }, [cart]);
 
   return (
     <>

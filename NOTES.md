@@ -1849,3 +1849,83 @@ useCallback is a hook in React that is used to memoize a function so that it is 
 When a function is passed down to a child component as a prop, the child component will re-render every time the parent component re-renders, even if the function itself has not changed. This can be inefficient if the function is expensive to create or if it causes the child component to unnecessarily re-render.
 
 useCallback solves this problem by memoizing the function, which means that the function is only re-created when its dependencies change. The dependencies are specified as the second argument to useCallback, and can be any values that the function depends on. If the dependencies have not changed since the last time the function was called, then the memoized function is returned instead of creating a new function.
+
+Notice that only call `Single item called!` while we changed the `cart` state:
+
+```js
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useFetch } from '../../9-custom-hooks/final/2-useFetch';
+
+// ATTENTION!!!!!!!!!!
+// I SWITCHED TO PERMANENT DOMAIN
+const url = 'https://course-api.com/javascript-store-products';
+
+// REMEMBER: every time props or state changes, component re-renders
+
+const Index = () => {
+  const { products } = useFetch(url);
+  const [count, setCount] = useState(0);
+  const [cart, setCart] = useState(0);
+
+  const addToCart = useCallback(() => {
+    console.log(cart);
+    setCart(cart + 1);
+  }, [cart]);
+
+  return (
+    <>
+      <h1>Count : {count}</h1>
+      <button className="btn" onClick={() => setCount(count + 1)}>
+        click me
+      </button>
+      <h1 style={{ marginTop: '3rem' }}>cart: {cart}</h1>
+      <BigList products={products} addToCart={addToCart} />
+    </>
+  );
+};
+
+const BigList = React.memo(({ products, addToCart }) => {
+  useEffect(() => {
+    console.log('big list called');
+  });
+  return (
+    <section className="products">
+      {products.map(product => {
+        return (
+          <SingleProduct
+            key={product.id}
+            {...product}
+            addToCart={addToCart}
+          ></SingleProduct>
+        );
+      })}
+    </section>
+  );
+});
+
+const SingleProduct = ({ fields, addToCart }) => {
+  useEffect(() => {
+    // Will be called 12 times.
+    // Because the `cart` state will be changed while we clicked the button
+    // REMEMBER: every time props or state changes, component re-renders
+    // We can fix that by using `useCallback`
+
+    console.log('Single item called!');
+  });
+
+  let { name, price } = fields;
+  price = price / 100;
+  const image = fields.image[0].url;
+
+  return (
+    <article className="product">
+      <img src={image} alt={name} />
+      <h4>{name}</h4>
+      <p>${price}</p>
+      <button onClick={addToCart}>add to cart</button>
+    </article>
+  );
+};
+
+export default Index;
+```
