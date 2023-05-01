@@ -4,6 +4,30 @@ import { useFetch } from '../../9-custom-hooks/final/2-useFetch';
 // ATTENTION!!!!!!!!!!
 // I SWITCHED TO PERMANENT DOMAIN
 const url = 'https://course-api.com/javascript-store-products';
+const calculateMostExpensive = data => {
+  console.log(data);
+
+  // The most expensive value
+  return (
+    // `reduce()` takes TWO params(callback-function, initial-value)
+    // `callback-function` takes FOUR params(accumulator, current value, index, array)
+    // `callback-function` returns the `accumulator`
+    // '0': is the initial value for `accumulator` (`accumulator` is `total` here)
+    data.reduce((total, item) => {
+      const price = item.fields.price;
+      if (price > total) {
+        total = price;
+      }
+      return total;
+    }, 0) / 100
+  );
+};
+
+// After you finished the `calculateMostExpensive` function
+// Think about: Actually we don't really want to re-call the function again an again
+// unless the most expensive value changed.
+// But where dose the value come from? (from the global variable `products`)
+// So we are going to fix the problem that use the `useMemo`
 
 // REMEMBER: every time props or state changes, component re-renders
 
@@ -17,13 +41,20 @@ const Index = () => {
     setCart(cart + 1);
   }, [cart]);
 
+  // `useMemo` returns the values that the first param of `useMemo` returns
+  const mostExpensive = useMemo(
+    () => calculateMostExpensive(products),
+    [products]
+  );
+
   return (
     <>
       <h1>Count : {count}</h1>
       <button className="btn" onClick={() => setCount(count + 1)}>
         click me
       </button>
-      <h1 style={{ marginTop: '3rem' }}>cart: {cart}</h1>
+      <h1 style={{ marginTop: '3rem' }}>cart : {cart}</h1>
+      <h1>Most expensive : ${mostExpensive}</h1>
       <BigList products={products} addToCart={addToCart} />
     </>
   );

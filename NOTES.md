@@ -1842,6 +1842,119 @@ useMemo is a hook provided by React that allows us to optimize the performance o
 
 When we use useMemo, we pass in a function and a dependency array. React will call the function and memoize the result. The next time the component renders, React will check the dependency array to see if any of the values have changed. If none of the values have changed, React will return the memoized value instead of recomputing the result.
 
+Here is an example:
+
+Think about some logics here:
+
+- After you finished the `calculateMostExpensive` function
+- Think about it:
+- Actually we don't really want to re-call the function again an again
+- which because of the changed variable `products`.
+- We are going to re-call the function while the most expensive value is changing.
+- But where dose the value come from? (from the global variable `products`)
+- So we are going to fix the problem that use the `useMemo`
+
+```js
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useFetch } from '../../9-custom-hooks/final/2-useFetch';
+
+// ATTENTION!!!!!!!!!!
+// I SWITCHED TO PERMANENT DOMAIN
+const url = 'https://course-api.com/javascript-store-products';
+const calculateMostExpensive = data => {
+  console.log(data);
+
+  // The most expensive value
+  return (
+    data.reduce((total, item) => {
+      const price = item.fields.price;
+      if (price > total) {
+        total = price;
+      }
+      return total;
+    }, 0) / 100
+  );
+};
+
+// REMEMBER: every time props or state changes, component re-renders
+
+const Index = () => {
+  const { products } = useFetch(url);
+  const [count, setCount] = useState(0);
+  const [cart, setCart] = useState(0);
+
+  const addToCart = useCallback(() => {
+    console.log(cart);
+    setCart(cart + 1);
+  }, [cart]);
+
+  // `useMemo` returns the values that the first param of `useMemo` returns
+  const mostExpensive = useMemo(
+    () => calculateMostExpensive(products),
+    [products]
+  );
+
+  return (
+    <>
+      <h1>Count : {count}</h1>
+      <button className="btn" onClick={() => setCount(count + 1)}>
+        click me
+      </button>
+      <h1 style={{ marginTop: '3rem' }}>cart : {cart}</h1>
+      <h1>Most expensive : ${mostExpensive}</h1>
+      <BigList products={products} addToCart={addToCart} />
+    </>
+  );
+};
+
+const BigList = React.memo(({ products, addToCart }) => {
+  useEffect(() => {
+    console.log('big list called');
+  });
+  return (
+    <section className="products">
+      {products.map(product => {
+        return (
+          <SingleProduct
+            key={product.id}
+            {...product}
+            addToCart={addToCart}
+          ></SingleProduct>
+        );
+      })}
+    </section>
+  );
+});
+
+const SingleProduct = ({ fields, addToCart }) => {
+  useEffect(() => {
+    console.log('Single item called!');
+  });
+
+  let { name, price } = fields;
+  price = price / 100;
+  const image = fields.image[0].url;
+
+  return (
+    <article className="product">
+      <img src={image} alt={name} />
+      <h4>{name}</h4>
+      <p>${price}</p>
+      <button onClick={addToCart}>add to cart</button>
+    </article>
+  );
+};
+
+export default Index;
+```
+
+> **Note**
+>
+> - `reduce()` takes TWO params(callback-function, initial-value)
+> - `callback-function` takes FOUR params(accumulator, current value, index, array)
+> - `callback-function` returns the `accumulator`
+> - '0': is the initial value for `accumulator` (`accumulator` is `total` here)
+
 #### useCallback
 
 useCallback is a hook in React that is used to memoize a function so that it is not re-created every time the component re-renders. This can help improve performance by reducing unnecessary re-renders.
