@@ -5,11 +5,16 @@ import { useFetch } from '../../9-custom-hooks/final/2-useFetch';
 // I SWITCHED TO PERMANENT DOMAIN
 const url = 'https://course-api.com/javascript-store-products';
 
-// every time props or state changes, component re-renders
+// REMEMBER: every time props or state changes, component re-renders
 
 const Index = () => {
   const { products } = useFetch(url);
   const [count, setCount] = useState(0);
+  const [cart, setCart] = useState(0);
+
+  const addToCart = () => {
+    setCart(cart + 1);
+  };
 
   return (
     <>
@@ -17,25 +22,41 @@ const Index = () => {
       <button className="btn" onClick={() => setCount(count + 1)}>
         click me
       </button>
-      <BigList products={products} />
+      <h1 style={{ marginTop: '3rem' }}>cart: {cart}</h1>
+      <BigList products={products} addToCart={addToCart} />
     </>
   );
 };
 
-const BigList = React.memo(({ products }) => {
+const BigList = React.memo(({ products, addToCart }) => {
   useEffect(() => {
     console.log('big list called');
   });
   return (
     <section className="products">
       {products.map(product => {
-        return <SingleProduct key={product.id} {...product}></SingleProduct>;
+        return (
+          <SingleProduct
+            key={product.id}
+            {...product}
+            addToCart={addToCart}
+          ></SingleProduct>
+        );
       })}
     </section>
   );
 });
 
-const SingleProduct = ({ fields }) => {
+const SingleProduct = ({ fields, addToCart }) => {
+  useEffect(() => {
+    // Will be called 12 times.
+    // Because the `cart` state will be changed while we clicked the button
+    // REMEMBER: every time props or state changes, component re-renders
+    // We can fix that by using `useCallback`
+
+    console.log('Single item called!');
+  });
+
   let { name, price } = fields;
   price = price / 100;
   const image = fields.image[0].url;
@@ -45,6 +66,7 @@ const SingleProduct = ({ fields }) => {
       <img src={image} alt={name} />
       <h4>{name}</h4>
       <p>${price}</p>
+      <button onClick={addToCart}>add to cart</button>
     </article>
   );
 };

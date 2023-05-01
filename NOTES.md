@@ -1841,3 +1841,11 @@ export default Person;
 useMemo is a hook provided by React that allows us to optimize the performance of our React application by memoizing the value of a function or computation. Memoization is the process of storing the result of a function call so that future calls to that function with the same input will return the cached result rather than computing the result again.
 
 When we use useMemo, we pass in a function and a dependency array. React will call the function and memoize the result. The next time the component renders, React will check the dependency array to see if any of the values have changed. If none of the values have changed, React will return the memoized value instead of recomputing the result.
+
+#### useCallback
+
+useCallback is a hook in React that is used to memoize a function so that it is not re-created every time the component re-renders. This can help improve performance by reducing unnecessary re-renders.
+
+When a function is passed down to a child component as a prop, the child component will re-render every time the parent component re-renders, even if the function itself has not changed. This can be inefficient if the function is expensive to create or if it causes the child component to unnecessarily re-render.
+
+useCallback solves this problem by memoizing the function, which means that the function is only re-created when its dependencies change. The dependencies are specified as the second argument to useCallback, and can be any values that the function depends on. If the dependencies have not changed since the last time the function was called, then the memoized function is returned instead of creating a new function.
